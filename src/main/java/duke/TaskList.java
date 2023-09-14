@@ -62,9 +62,15 @@ public class TaskList {
             toYear = toYear.substring(0, toYear.indexOf(" "));
             LocalDate to = LocalDate.of(Integer.parseInt(trimString(toYear)), Integer.parseInt(toMonth), Integer.parseInt(toDate));
             LocalDate from = LocalDate.of(Integer.parseInt(trimString(fromYear)), Integer.parseInt(fromMonth), Integer.parseInt(fromDate));
+
+            assert done.equals("1") || done.equals("0"): "x is either one or zero";
             Event event = new Event(content, from, to);
             if (done.equals("1")) {
                 event.finish();
+                list.add(event);
+            } else {
+                list.add(event);
+
             }
             list.add(event);
 
@@ -126,9 +132,13 @@ public class TaskList {
         if (parser.getStr().equals("bye")) {
             Ui bye = new Ui();
             bye.bye();
+            assert ui.toString() != null : "ui.toString() cannot be null";
             return ui.toString();
+
         } else if (parser.getStr().equals("list")) {
+
             ui.currentlist((list.size()), onetwo);
+            assert ui.toString() != null : "ui.toString() cannot be null";
             return List() + ui.toString();
         } else if (parser.getArr()[0].equals("delete")) {
             try {
@@ -138,6 +148,7 @@ public class TaskList {
                 list.remove(Integer.parseInt(arr[1]) - 1);
                 ui.currentlist((list.size()), onetwo);
                 refreshData();
+                assert ui.toString() != null : "ui.toString() cannot be null";
                 return ui.toString();
             }
             catch(NumberFormatException e) {
@@ -156,6 +167,7 @@ public class TaskList {
                 list.get(Integer.parseInt(arr[1]) - 1).getDescription();
                 list.get(Integer.parseInt(arr[1]) - 1).finish();
                 refreshData();
+                assert ui.toString() != null : "ui.toString() cannot be null";
                 return ui.toString();
 
 
@@ -176,6 +188,7 @@ public class TaskList {
                 ui.unmark(list.size(), onetwo, list.get(Integer.parseInt(arr[1]) - 1).getDescription());
                 list.get(Integer.parseInt(arr[1]) - 1).unfinish();
                 refreshData();
+                assert ui.toString() != null : "ui.toString() cannot be null";
                 return ui.toString();
             }
             catch(NumberFormatException e) {
@@ -197,6 +210,7 @@ public class TaskList {
                 }
             }
             ui.matchingList(matchingList);
+            assert ui.toString() != null : "ui.toString() cannot be null";
             return ui.toString();
 
         }
@@ -222,6 +236,7 @@ public class TaskList {
             list.add(event);
             appendToFile(zenithData, parser.getStr());
             refreshData();
+            assert ui.toString() != null : "ui.toString() cannot be null";
             return ui.toString();
 
 
@@ -237,6 +252,7 @@ public class TaskList {
             ui.add(deadline, list.size(), onetwo);
             list.add(deadline);
             refreshData();
+            assert ui.toString() != null : "ui.toString() cannot be null";
             return ui.toString();
 
         }
@@ -248,6 +264,7 @@ public class TaskList {
                 ui.add(todo, list.size(), onetwo);
                 appendToFile(zenithData, parser.getStr());
                 refreshData();
+                assert ui.toString() != null : "ui.toString() cannot be null";
                 return ui.toString();
 
             } catch (ArrayIndexOutOfBoundsException e){
@@ -261,6 +278,9 @@ public class TaskList {
                 System.out.println(arr[1]);
             } catch(ArrayIndexOutOfBoundsException e) {
                 ui.blank();
+
+                assert ui.toString() != null : "ui.toString() cannot be null";
+
                 return ui.toString();
             }
         } else {
@@ -269,6 +289,9 @@ public class TaskList {
             }
             catch (DukeException e) {
                 ui.format();
+
+                assert ui.toString() != null : "ui.toString() cannot be null";
+
                 return ui.toString();
             }
         }
@@ -297,6 +320,7 @@ public class TaskList {
     public String List() {
         Ui ui = new Ui();
         ui.list(list);
+        assert ui.toString() != null : "ui.toString() cannot be null";
         return ui.toString();
     }
 
@@ -307,22 +331,20 @@ public class TaskList {
      * @return The date string in "dd/MM/yyyy" format.
      */
     public static String convertDateFormat(String inputDateStr) {
-        // Split the input date string by the '-' delimiter
         String[] parts = inputDateStr.split("-");
 
-        // Ensures that there are three parts (year, month, day)
+
         if (parts.length != 3) {
             return "Invalid date format";
         }
 
-        // Reorders the parts to form the desired output format
+
         String day = parts[2];
         String month = parts[1];
         String year = parts[0];
 
-        // Concatenates the parts with '/' separator
         String outputDateStr = day + "/" + month + "/" + year;
-
+        assert outputDateStr != null : "ui.toString() cannot be null";
         return outputDateStr;
     }
 
